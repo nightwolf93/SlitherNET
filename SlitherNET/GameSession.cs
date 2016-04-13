@@ -1,4 +1,5 @@
-﻿using SlitherNET.Network;
+﻿using SlitherNET.Game;
+using SlitherNET.Network;
 using SlitherNET.Network.Packets;
 using SlitherNET.Network.Packets.Client;
 using SlitherNET.Network.Packets.Server;
@@ -18,6 +19,7 @@ namespace SlitherNET
     {
         public int GameState = 1;
         public string Username = string.Empty;
+        public Snake MySnake = null;
 
         protected override void OnMessage(MessageEventArgs e)
         {
@@ -33,6 +35,17 @@ namespace SlitherNET
                 // Send the initial packet
                 this.GameState = 2;
                 this.SendPacket(new SMSG_a_InitialPacket(21000));
+
+                this.MySnake = new Snake()
+                {
+                    ID = 1,
+                    Speed = (float)(5.76 * 1E3),
+                    Skin = 20,
+                    Position = new Vector2f((float)(28907.6 * 5), (float)(21137.4 * 5)),
+                    Name = this.Username == "" ? "Anonymous" : this.Username,
+                    HeadPosition = new Vector2f((float)(28907.3 * 5), (float)(21136.8 * 5)),
+                };
+                this.SendPacket(new SMSG_s_NewSnake(this.MySnake));
             }
             else if(this.GameState == 2) // Update game
             {

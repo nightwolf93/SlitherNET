@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +49,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\Snake.cs" />
+    <Compile Include="Game\Vector2f.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="Network\BigEndianReader.cs" />
     <Compile Include="Network\BigEndianWriter.cs" />
@@ -56,6 +59,8 @@
     <Compile Include="Network\Packets\Client\CMSG_SetUsername.cs" />
     <Compile Include="Network\Packets\IPacket.cs" />
     <Compile Include="Network\Packets\Server\SMSG_a_InitialPacket.cs" />
+    <Compile Include="Network\Packets\Server\SMSG_g_Unknow.cs" />
+    <Compile Include="Network\Packets\Server\SMSG_s_NewSnake.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -253,7 +253,7 @@ namespace SlitherNET.Network
             for (i = 0; i < len; i++)
                 m_writer.Write(bytes[i]);
         }
-
+        
         public void WriteBigString(string str)
         {
             var bytes = Encoding.UTF8.GetBytes(str);
