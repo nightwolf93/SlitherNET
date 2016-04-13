@@ -1,0 +1,30 @@
+﻿ // Global score packet
+{
+    //var bytes = new byte[1000];
+    //var writer = new BigEndianWriter(new MemoryStream(bytes));
+    //writer.WriteByte(0);
+    //writer.WriteByte(0);
+    //writer.WriteByte(Convert.ToByte('m'));
+    //writer.WriteByte((byte)(462 >> 16));
+    //writer.WriteByte((byte)(462 >> 8));
+    //writer.WriteByte((byte)(462 & 0xFF));
+
+    //var loc1 = (int)0.580671702663404 * 16777215;
+    //writer.WriteByte((byte)(loc1 >> 16));
+    //writer.WriteByte((byte)(loc1 >> 8));
+    //writer.WriteByte((byte)(loc1 & 0xFF));
+
+    //writer.WriteByte((byte) (("https://github.com/").Length + 2));
+    //writer.WriteUTF("https://github.com/");
+    //writer.WriteUTF("SlitherNET, a .net server engine for slither.io");
+    //this.SendPacket(bytes);
+
+    //var bytes = new byte[30];
+    //var writer = new BigEndianWriter(new MemoryStream(bytes));
+    //writer.WriteByte(0);
+    //writer.WriteByte(0);
+    //writer.WriteByte(Convert.ToByte('v'));
+
+    //System.Threading.Thread.Sleep(3000);
+    //this.Send(bytes);
+}
