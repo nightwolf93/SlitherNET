@@ -49,6 +49,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\Food.cs" />
+    <Compile Include="Game\GameRoom.cs" />
     <Compile Include="Game\Snake.cs" />
     <Compile Include="Game\SnakePart.cs" />
     <Compile Include="Game\Vector2f.cs" />
@@ -60,6 +62,7 @@
     <Compile Include="Network\Packets\Client\CMSG_SetUsername.cs" />
     <Compile Include="Network\Packets\IPacket.cs" />
     <Compile Include="Network\Packets\Server\SMSG_a_InitialPacket.cs" />
+    <Compile Include="Network\Packets\Server\SMSG_F_MapFoods.cs" />
     <Compile Include="Network\Packets\Server\SMSG_g_Unknow.cs" />
     <Compile Include="Network\Packets\Server\SMSG_s_NewSnake.cs" />
     <Compile Include="Program.cs" />

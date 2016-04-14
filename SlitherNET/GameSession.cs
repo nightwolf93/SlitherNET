@@ -61,14 +61,15 @@ namespace SlitherNET
                     writer.WriteByte((byte)(loc1 >> 16));
                     writer.WriteByte((byte)(loc1 >> 8));
                     writer.WriteByte((byte)(loc1 & 0xFF));
-
-                    writer.WriteByte((byte)(("https://github.com/").Length + 2));
-                    writer.WriteUTF("https://github.com/");
-                    writer.WriteUTF("SlitherNET, a .net server engine for slither.io");
+                    
+                    writer.WriteString("https://github.com/");
+                    writer.WriteString("SlitherNET, a .net server engine for slither.io");
                     this.Send(bytes);
                 }
 
                 this.SendPacket(new SMSG_g_Unknow(28907, 21136));
+                GameRoom.Instance.AddPlayer(this);
+                GameRoom.Instance.ShowFoods(this);
             }
             else if(this.GameState == 2) // Update game
             {
