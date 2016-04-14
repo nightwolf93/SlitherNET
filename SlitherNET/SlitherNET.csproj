@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Snake.cs" />
+    <Compile Include="Game\SnakePart.cs" />
     <Compile Include="Game\Vector2f.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="Network\BigEndianReader.cs" />

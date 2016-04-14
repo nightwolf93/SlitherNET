@@ -155,11 +155,12 @@ namespace SlitherNET.Network
             m_writer.Write(@byte);
         }
 
-        public void WriteInt24(int @int)
+        public void WriteInt24(double @int)
         {
-            this.WriteByte((byte)(@int >> 16));
-            this.WriteByte((byte)(@int >> 8));
-            this.WriteByte((byte)(@int & 0xFF));
+            var number = (int)Math.Floor(@int);
+            this.WriteByte((byte)(number >> 16));
+            this.WriteByte((byte)(number >> 8));
+            this.WriteByte((byte)(number & 0xFF));
         }
 
         public void WriteSByte(sbyte @byte)

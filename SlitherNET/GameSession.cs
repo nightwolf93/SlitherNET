@@ -43,9 +43,32 @@ namespace SlitherNET
                     Skin = 20,
                     Position = new Vector2f((float)(28907.6 * 5), (float)(21137.4 * 5)),
                     Name = this.Username == "" ? "Anonymous" : this.Username,
-                    HeadPosition = new Vector2f((float)(28907.3 * 5), (float)(21136.8 * 5)),
+                    HeadPosition = new Vector2f(28907.3f * 5, 21136.8f * 5),
                 };
                 this.SendPacket(new SMSG_s_NewSnake(this.MySnake));
+                
+                {
+                    var bytes = new byte[1000];
+                    var writer = new BigEndianWriter(new MemoryStream(bytes));
+                    writer.WriteByte(0);
+                    writer.WriteByte(0);
+                    writer.WriteByte(Convert.ToByte('m'));
+                    writer.WriteByte((byte)(462 >> 16));
+                    writer.WriteByte((byte)(462 >> 8));
+                    writer.WriteByte((byte)(462 & 0xFF));
+
+                    var loc1 = (int)0.580671702663404 * 16777215;
+                    writer.WriteByte((byte)(loc1 >> 16));
+                    writer.WriteByte((byte)(loc1 >> 8));
+                    writer.WriteByte((byte)(loc1 & 0xFF));
+
+                    writer.WriteByte((byte)(("https://github.com/").Length + 2));
+                    writer.WriteUTF("https://github.com/");
+                    writer.WriteUTF("SlitherNET, a .net server engine for slither.io");
+                    this.Send(bytes);
+                }
+
+                this.SendPacket(new SMSG_g_Unknow(28907, 21136));
             }
             else if(this.GameState == 2) // Update game
             {
@@ -66,6 +89,8 @@ namespace SlitherNET
                 }
                 else // Mouse rotation
                 {
+                    Console.WriteLine("Mouse rotation (angle: " + updatePacket.ActionType + ") ");
+                    this.MySnake.Position.X += 100;
 
                 }
             }
