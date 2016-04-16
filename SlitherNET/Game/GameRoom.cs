@@ -1,4 +1,5 @@
-﻿using SlitherNET.Network.Packets.Server;
+﻿using SlitherNET.Network;
+using SlitherNET.Network.Packets.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,12 +26,12 @@ namespace SlitherNET.Game
             }
         }
 
-        public void AddPlayer(GameSession session)
+        public void AddPlayer(GameClient session)
         {
 
         }
 
-        public void ShowFoods(GameSession session)
+        public void ShowFoods(GameClient session)
         {
             session.SendPacket(new SMSG_F_MapFoods(this.Foods));
         }

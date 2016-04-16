@@ -10,16 +10,26 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
-namespace SlitherNET
+namespace SlitherNET.Network
 {
-    public class GameSession : WebSocketBehavior
+    public class GameClient : WebSocketBehavior
     {
         public int GameState = 1;
         public string Username = string.Empty;
         public Snake MySnake = null;
+        public bool Active = true;
+        public Timer LogicTimer { get; set; }
+
+        protected override void OnClose(CloseEventArgs e)
+        {
+            Console.WriteLine("Connection closed with the player");
+            this.Active = false;
+            base.OnClose(e);
+        }
 
         protected override void OnMessage(MessageEventArgs e)
         {
@@ -67,9 +77,24 @@ namespace SlitherNET
                     this.Send(bytes);
                 }
 
-                this.SendPacket(new SMSG_g_Unknow(28907, 21136));
+                //this.SendPacket(new SMSG_g_Unknow(28907, 21136));
                 GameRoom.Instance.AddPlayer(this);
                 GameRoom.Instance.ShowFoods(this);
+                //this.SendPacket(new SMSG_G_UpdateSnake(this.MySnake));
+
+                this.LogicTimer = new Timer(2000);
+                this.LogicTimer.Elapsed += (object sender, ElapsedEventArgs e2) =>
+                {
+                    if (this.Active)
+                    {
+                        this.UpdateSnake();
+                    }
+                    else
+                    {
+                        this.LogicTimer.Stop();
+                    }
+                };
+                this.LogicTimer.Start();
             }
             else if(this.GameState == 2) // Update game
             {
@@ -91,11 +116,17 @@ namespace SlitherNET
                 else // Mouse rotation
                 {
                     Console.WriteLine("Mouse rotation (angle: " + updatePacket.ActionType + ") ");
-                    this.MySnake.Position.X += 100;
-
+                    this.SendPacket(new SMSG_e_UpdateSnakeDirection(this.MySnake, updatePacket.ActionType / 100));
                 }
             }
             
+        }
+
+        public void UpdateSnake()
+        {
+            this.MySnake.Position.X += 10;
+            this.MySnake.Position.Y += 10;
+            this.SendPacket(new SMSG_G_UpdateSnake(this.MySnake));
         }
 
         public void SendPacket(IPacket packet)

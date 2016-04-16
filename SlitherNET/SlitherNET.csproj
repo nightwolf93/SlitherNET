@@ -57,13 +57,14 @@
     <Compile Include="Metadata.cs" />
     <Compile Include="Network\BigEndianReader.cs" />
     <Compile Include="Network\BigEndianWriter.cs" />
-    <Compile Include="GameSession.cs" />
+    <Compile Include="Network\GameClient.cs" />
     <Compile Include="Network\Packets\Client\CMSG_Update.cs" />
     <Compile Include="Network\Packets\Client\CMSG_SetUsername.cs" />
     <Compile Include="Network\Packets\IPacket.cs" />
     <Compile Include="Network\Packets\Server\SMSG_a_InitialPacket.cs" />
+    <Compile Include="Network\Packets\Server\SMSG_e_UpdateSnakeDirection.cs" />
     <Compile Include="Network\Packets\Server\SMSG_F_MapFoods.cs" />
-    <Compile Include="Network\Packets\Server\SMSG_g_Unknow.cs" />
+    <Compile Include="Network\Packets\Server\SMSG_G_UpdateSnake.cs" />
     <Compile Include="Network\Packets\Server\SMSG_s_NewSnake.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

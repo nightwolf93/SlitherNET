@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlitherNET.Game;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SlitherNET.Network.Packets.Server
 {
-    public class SMSG_g_Unknow : IPacket
+    public class SMSG_G_UpdateSnake : IPacket
     {
         public char ProtocolId
         {
@@ -17,18 +18,16 @@ namespace SlitherNET.Network.Packets.Server
             }
         }
 
+        public Snake @Snake { get; set; }
+
+        public SMSG_G_UpdateSnake(Snake snake)
+        {
+            this.Snake = snake;
+        }
+
         public void Deserialize(byte[] data)
         {
             throw new NotImplementedException();
-        }
-
-        public int X { get; set; }
-        public int Y { get; set; }
-
-        public SMSG_g_Unknow(int x, int y)
-        {
-            this.X = x;
-            this.Y = y;
         }
 
         public byte[] Serialize()
@@ -39,8 +38,9 @@ namespace SlitherNET.Network.Packets.Server
             writer.WriteByte(0);
             writer.WriteByte(0);
             writer.WriteByte(Convert.ToByte(this.ProtocolId));
-            writer.WriteInt24(this.X);
-            writer.WriteInt24(this.Y);
+            writer.WriteShort((short)this.Snake.ID);
+            writer.WriteShort((short)(this.Snake.Position.X));
+            writer.WriteShort((short)(this.Snake.Position.Y));
 
             return bytes;
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlitherNET.Network;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace SlitherNET
             Console.ForegroundColor = ConsoleColor.Gray;
 
             var wssv = new WebSocketServer("ws://127.0.0.1:444");
-            wssv.AddWebSocketService<GameSession>("/slither");
+            wssv.AddWebSocketService<GameClient>("/slither");
             wssv.Start();
 
             while (true)
