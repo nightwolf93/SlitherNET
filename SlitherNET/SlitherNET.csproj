@@ -65,6 +65,7 @@
     <Compile Include="Network\Packets\Server\SMSG_e_UpdateSnakeDirection.cs" />
     <Compile Include="Network\Packets\Server\SMSG_F_MapFoods.cs" />
     <Compile Include="Network\Packets\Server\SMSG_G_UpdateSnake.cs" />
+    <Compile Include="Network\Packets\Server\SMSG_l_Leaderboard.cs" />
     <Compile Include="Network\Packets\Server\SMSG_p_Pong.cs" />
     <Compile Include="Network\Packets\Server\SMSG_s_NewSnake.cs" />
     <Compile Include="Program.cs" />

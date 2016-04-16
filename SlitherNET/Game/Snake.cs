@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlitherNET.Network;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -16,12 +17,17 @@ namespace SlitherNET.Game
         public string Name { get; set; }
         public Vector2f HeadPosition { get; set; }
         public List<SnakePart> Parts { get; set; }
+        public int Size { get; set; }
+
+        public GameClient Player { get; set; }
 
         public Snake()
         {
             this.Parts = new List<SnakePart>();
-            this.Parts.Add(new SnakePart(this, new Vector2f(1, 2)));
-            this.Parts.Add(new SnakePart(this, new Vector2f(3, 4)));
+            for (int i = 0; i < 50; i += 2)
+            {
+                this.Parts.Add(new SnakePart(this, new Vector2f(i + 1, i + 2)));
+            }
         }
     }
 }

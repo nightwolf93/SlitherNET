@@ -28,6 +28,7 @@ namespace SlitherNET.Network
         {
             Console.WriteLine("Connection closed with the player");
             this.Active = false;
+            GameRoom.Instance.RemovePlayer(this);
             base.OnClose(e);
         }
 
@@ -48,6 +49,7 @@ namespace SlitherNET.Network
 
                 this.MySnake = new Snake()
                 {
+                    Player = this,
                     ID = 1,
                     Speed = (float)(5.76 * 1E3),
                     Skin = 20,
@@ -72,14 +74,15 @@ namespace SlitherNET.Network
                     writer.WriteByte((byte)(loc1 >> 8));
                     writer.WriteByte((byte)(loc1 & 0xFF));
                     
-                    writer.WriteString("https://github.com/");
+                    writer.WriteString("https://github.com/nightwolf93/SlitherNET");
                     writer.WriteString("SlitherNET, a .net server engine for slither.io");
                     this.Send(bytes);
                 }
-
+                
                 //this.SendPacket(new SMSG_g_Unknow(28907, 21136));
                 GameRoom.Instance.AddPlayer(this);
                 GameRoom.Instance.ShowFoods(this);
+                GameRoom.Instance.UpdateLeaderboard(this);
                 //this.SendPacket(new SMSG_G_UpdateSnake(this.MySnake));
 
                 this.LogicTimer = new Timer(1000);

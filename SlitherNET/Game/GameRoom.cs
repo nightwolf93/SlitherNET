@@ -11,10 +11,12 @@ namespace SlitherNET.Game
     public class GameRoom
     {
         public List<Food> Foods { get; set; }
+        public List<GameClient> Players { get; set; }
 
         public GameRoom()
         {
             this.Foods = new List<Food>();
+            this.Players = new List<GameClient>();
             this.initializeFoods();
         }
 
@@ -28,12 +30,33 @@ namespace SlitherNET.Game
 
         public void AddPlayer(GameClient session)
         {
+            lock (this.Players)
+            {
+                this.Players.Add(session);
+            }
+        }
 
+        public void RemovePlayer(GameClient session)
+        {
+            lock (this.Players)
+            {
+                this.Players.Remove(session);
+            }
         }
 
         public void ShowFoods(GameClient session)
         {
             session.SendPacket(new SMSG_F_MapFoods(this.Foods));
+        }
+        
+        public void UpdateLeaderboard(GameClient client)
+        {
+            var snakes = new List<Snake>();
+            foreach(var c in this.Players)
+            {
+                snakes.Add(c.MySnake);
+            }
+            client.SendPacket(new SMSG_l_Leaderboard(1, snakes));
         }
 
         private static GameRoom mRoom { get; set; }
