@@ -82,7 +82,7 @@ namespace SlitherNET.Network
                 GameRoom.Instance.ShowFoods(this);
                 //this.SendPacket(new SMSG_G_UpdateSnake(this.MySnake));
 
-                this.LogicTimer = new Timer(2000);
+                this.LogicTimer = new Timer(1000);
                 this.LogicTimer.Elapsed += (object sender, ElapsedEventArgs e2) =>
                 {
                     if (this.Active)
@@ -124,8 +124,9 @@ namespace SlitherNET.Network
 
         public void UpdateSnake()
         {
-            this.MySnake.Position.X += 10;
-            this.MySnake.Position.Y += 10;
+            this.MySnake.Position.X += 100;
+            this.MySnake.Position.Y -= 100;
+            this.SendPacket(new SMSG_p_Pong());
             this.SendPacket(new SMSG_G_UpdateSnake(this.MySnake));
         }
 
