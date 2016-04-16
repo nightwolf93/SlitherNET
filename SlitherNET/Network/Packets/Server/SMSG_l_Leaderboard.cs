@@ -34,36 +34,24 @@ namespace SlitherNET.Network.Packets.Server
 
         public byte[] Serialize()
         {
-            var bytes = new byte[300];
+            var lengthOfUsername = 0;
+            this.Snakes.ForEach(x => lengthOfUsername += x.Player.Username.Length);
+            var bytes = new byte[(8 + lengthOfUsername) + (this.Snakes.Count * 7)];
             var writer = new BigEndianWriter(new MemoryStream(bytes));
 
             writer.WriteByte(0);
             writer.WriteByte(0);
             writer.WriteByte(Convert.ToByte(this.ProtocolId));
+            writer.WriteByte(0);
             writer.WriteShort(this.Rank);
             writer.WriteShort((short)this.Snakes.Count);
             foreach(var snake in this.Snakes)
             {
-                writer.WriteString(snake.Player.Username);
                 writer.WriteShort(306);
                 writer.WriteInt24(0.7810754645511785 * 16777215);
                 writer.WriteByte((byte)snake.Skin);
+                writer.WriteString(snake.Player.Username);
             }
-
-            //b += msgUtil.writeInt8(b, arr, 0);
-            //b += msgUtil.writeInt8(b, arr, 0);
-            //b += msgUtil.writeInt8(b, arr, this.packetType);
-            //b += msgUtil.writeInt16(b, arr, this.rank);
-            //b += msgUtil.writeInt16(b, arr, this.playersCount);
-
-            //for (var i = 0; i < this.topTen.length; i++)
-            //{
-            //    b += msgUtil.writeInt8(b, arr, this.topTen[i].snake.username.length);
-            //    b += msgUtil.writeString(b, arr, this.topTen[i].snake.username);
-            //    b += msgUtil.writeInt16(b + 1, arr, this.topTen[i].snake.J);
-            //    b += msgUtil.writeInt24(b + 1, arr, this.topTen[i].snake.I);
-            //    b += msgUtil.writeInt8(b + 1, arr, this.topTen[i].snake.color);
-            //}
 
             return bytes;
         }
