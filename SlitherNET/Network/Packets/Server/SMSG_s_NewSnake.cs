@@ -32,7 +32,7 @@ namespace SlitherNET.Network.Packets.Server
 
         public byte[] Serialize()
         {
-            var bytes = new byte[40 + (2 * this.Snake.Parts.Count)];
+            var bytes = new byte[(37 + this.Snake.Name.Length) + (2 * this.Snake.Parts.Count)];
             var writer = new BigEndianWriter(new MemoryStream(bytes));
 
             writer.WriteByte(0);

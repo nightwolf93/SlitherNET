@@ -29,6 +29,7 @@ namespace SlitherNET.Network
             Console.WriteLine("Connection closed with the player");
             this.Active = false;
             GameRoom.Instance.RemovePlayer(this);
+            GameRoom.Instance.UpdateLeaderboard();
             base.OnClose(e);
         }
 
@@ -45,14 +46,14 @@ namespace SlitherNET.Network
 
                 // Send the initial packet
                 this.GameState = 2;
-                this.SendPacket(new SMSG_a_InitialPacket(21000));
+                this.SendPacket(new SMSG_a_InitialPacket(21600));
 
                 this.MySnake = new Snake()
                 {
                     Player = this,
                     ID = 1,
                     Speed = (float)(5.76 * 1E3),
-                    Skin = 20,
+                    Skin = Metadata.Rng.Next(1, 20),
                     Position = new Vector2f((float)(28907.6 * 5), (float)(21137.4 * 5)),
                     Name = this.Username == "" ? "Anonymous" : this.Username,
                     HeadPosition = new Vector2f(28907.3f * 5, 21136.8f * 5),
@@ -82,7 +83,8 @@ namespace SlitherNET.Network
                 //this.SendPacket(new SMSG_g_Unknow(28907, 21136));
                 GameRoom.Instance.AddPlayer(this);
                 GameRoom.Instance.ShowFoods(this);
-                GameRoom.Instance.UpdateLeaderboard(this);
+                GameRoom.Instance.UpdateLeaderboard();
+                this.SendPacket(new SMSG_p_Pong());
                 //this.SendPacket(new SMSG_G_UpdateSnake(this.MySnake));
 
                 this.LogicTimer = new Timer(1000);
@@ -104,6 +106,8 @@ namespace SlitherNET.Network
                 var updatePacket = new CMSG_Update();
                 updatePacket.Deserialize(e.RawData);
 
+                Console.WriteLine("ActionType : " + updatePacket.ActionType);
+
                 if(updatePacket.ActionType == 253) // Mouse down
                 {
 
@@ -114,7 +118,7 @@ namespace SlitherNET.Network
                 }
                 else if (updatePacket.ActionType == 251) // Ping
                 {
-
+                    this.SendPacket(new SMSG_p_Pong());
                 }
                 else // Mouse rotation
                 {
@@ -129,7 +133,6 @@ namespace SlitherNET.Network
         {
             this.MySnake.Position.X += 100;
             this.MySnake.Position.Y -= 100;
-            this.SendPacket(new SMSG_p_Pong());
             this.SendPacket(new SMSG_G_UpdateSnake(this.MySnake));
         }
 

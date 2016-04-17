@@ -49,14 +49,17 @@ namespace SlitherNET.Game
             session.SendPacket(new SMSG_F_MapFoods(this.Foods));
         }
         
-        public void UpdateLeaderboard(GameClient client)
+        public void UpdateLeaderboard()
         {
             var snakes = new List<Snake>();
             foreach(var c in this.Players)
             {
                 snakes.Add(c.MySnake);
             }
-            client.SendPacket(new SMSG_l_Leaderboard(1, snakes));
+            foreach(var client in this.Players)
+            {
+                client.SendPacket(new SMSG_l_Leaderboard(1, snakes));
+            }
         }
 
         private static GameRoom mRoom { get; set; }
