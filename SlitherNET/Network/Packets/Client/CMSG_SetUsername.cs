@@ -18,12 +18,15 @@ namespace SlitherNET.Network.Packets.Client
         }
 
         public string Username { get; set; }
+        public byte SkinId { get; set; }
 
         public void Deserialize(byte[] data)
         {
             var reader = new BigEndianReader(new MemoryStream(data));
-            var loc3 = reader.ReadByte();
-            this.Username = reader.ReadUTF();
+            reader.ReadByte();
+            reader.ReadByte();
+            this.SkinId = reader.ReadByte();
+            this.Username = reader.ReadEndString();
         }
 
         public byte[] Serialize()

@@ -242,6 +242,12 @@ namespace SlitherNET.Network
             return Encoding.UTF8.GetString(bytes);
         }
 
+        public string ReadEndString()
+        {
+            byte[] bytes = ReadBytes((int)(this.BytesAvailable));
+            return Encoding.UTF8.GetString(bytes);
+        }
+
         /// <summary>
         ///   Read a string from the Buffer
         /// </summary>

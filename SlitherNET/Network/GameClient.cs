@@ -53,7 +53,7 @@ namespace SlitherNET.Network
                     Player = this,
                     ID = 1,
                     Speed = (float)(5.76 * 1E3),
-                    Skin = Metadata.Rng.Next(1, 20),
+                    Skin = usernamePacket.SkinId,
                     Position = new Vector2f((float)(28907.6 * 5), (float)(21137.4 * 5)),
                     Name = this.Username == "" ? "Anonymous" : this.Username,
                     HeadPosition = new Vector2f(28907.3f * 5, 21136.8f * 5),
