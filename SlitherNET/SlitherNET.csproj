@@ -47,6 +47,10 @@
       <HintPath>..\packages\WebSocketSharp.1.0.3-rc9\lib\websocket-sharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="YamlDotNet, Version=3.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YamlDotNet.3.8.0\lib\net35\YamlDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Food.cs" />
@@ -66,6 +70,7 @@
     <Compile Include="Network\Packets\Server\SMSG_F_MapFoods.cs" />
     <Compile Include="Network\Packets\Server\SMSG_G_UpdateSnake.cs" />
     <Compile Include="Network\Packets\Server\SMSG_l_Leaderboard.cs" />
+    <Compile Include="Network\Packets\Server\SMSG_m_MessageOfTheDay.cs" />
     <Compile Include="Network\Packets\Server\SMSG_p_Pong.cs" />
     <Compile Include="Network\Packets\Server\SMSG_s_NewSnake.cs" />
     <Compile Include="Program.cs" />
@@ -74,6 +79,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <Content Include="Settings.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Research.txt" />

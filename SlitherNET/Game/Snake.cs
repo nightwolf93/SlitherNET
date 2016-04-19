@@ -18,6 +18,7 @@ namespace SlitherNET.Game
         public Vector2f HeadPosition { get; set; }
         public List<SnakePart> Parts { get; set; }
         public int Size { get; set; }
+        public short CurrentAngle { get; set; }
 
         public GameClient Player { get; set; }
 

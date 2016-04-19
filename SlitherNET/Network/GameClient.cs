@@ -59,33 +59,12 @@ namespace SlitherNET.Network
                     HeadPosition = new Vector2f(28907.3f * 5, 21136.8f * 5),
                 };
                 this.SendPacket(new SMSG_s_NewSnake(this.MySnake));
+                this.SendPacket(new SMSG_m_MessageOfTheDay("SlitherNET, a .net server engine for slither.io", "https://github.com/nightwolf93/SlitherNET"));
                 
-                {
-                    var bytes = new byte[1000];
-                    var writer = new BigEndianWriter(new MemoryStream(bytes));
-                    writer.WriteByte(0);
-                    writer.WriteByte(0);
-                    writer.WriteByte(Convert.ToByte('m'));
-                    writer.WriteByte((byte)(462 >> 16));
-                    writer.WriteByte((byte)(462 >> 8));
-                    writer.WriteByte((byte)(462 & 0xFF));
-
-                    var loc1 = (int)0.580671702663404 * 16777215;
-                    writer.WriteByte((byte)(loc1 >> 16));
-                    writer.WriteByte((byte)(loc1 >> 8));
-                    writer.WriteByte((byte)(loc1 & 0xFF));
-                    
-                    writer.WriteString("https://github.com/nightwolf93/SlitherNET");
-                    writer.WriteString("SlitherNET, a .net server engine for slither.io");
-                    this.Send(bytes);
-                }
-                
-                //this.SendPacket(new SMSG_g_Unknow(28907, 21136));
                 GameRoom.Instance.AddPlayer(this);
                 GameRoom.Instance.ShowFoods(this);
                 GameRoom.Instance.UpdateLeaderboard();
                 this.SendPacket(new SMSG_p_Pong());
-                //this.SendPacket(new SMSG_G_UpdateSnake(this.MySnake));
 
                 this.LogicTimer = new Timer(1000);
                 this.LogicTimer.Elapsed += (object sender, ElapsedEventArgs e2) =>
@@ -122,8 +101,10 @@ namespace SlitherNET.Network
                 }
                 else // Mouse rotation
                 {
-                    Console.WriteLine("Mouse rotation (angle: " + updatePacket.ActionType + ") ");
-                    this.SendPacket(new SMSG_e_UpdateSnakeDirection(this.MySnake, updatePacket.ActionType / 100));
+                    var degrees = (short)Math.Floor(updatePacket.ActionType * 1.44);
+                    this.MySnake.CurrentAngle = degrees;
+                    Console.WriteLine("Mouse angle : " + degrees);
+                    this.SendPacket(new SMSG_e_UpdateSnakeDirection(this.MySnake, degrees));
                 }
             }
             
@@ -131,8 +112,13 @@ namespace SlitherNET.Network
 
         public void UpdateSnake()
         {
-            this.MySnake.Position.X += 100;
-            this.MySnake.Position.Y -= 100;
+            this.MySnake.Position.X += ((float)Math.Cos(this.MySnake.CurrentAngle) / 5) * 1000;
+            this.MySnake.Position.Y += ((float)Math.Sin(this.MySnake.CurrentAngle) / 5) * 1000;
+
+            //Console.WriteLine("X : " + (float)Math.Cos(this.MySnake.CurrentAngle) / 5);
+            //Console.WriteLine("Y : " + (float)Math.Sin(this.MySnake.CurrentAngle) / 5);
+
+            this.SendPacket(new SMSG_e_UpdateSnakeDirection(this.MySnake, this.MySnake.CurrentAngle));
             this.SendPacket(new SMSG_G_UpdateSnake(this.MySnake));
         }
 

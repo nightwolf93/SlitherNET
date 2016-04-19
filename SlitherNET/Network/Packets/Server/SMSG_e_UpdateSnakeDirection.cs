@@ -41,7 +41,7 @@ namespace SlitherNET.Network.Packets.Server
             writer.WriteByte(0);
             writer.WriteByte(Convert.ToByte(this.ProtocolId));
             writer.WriteShort((short)this.Snake.ID);
-            writer.WriteByte((byte) 82);
+            writer.WriteByte((byte) this.Direction);
             writer.WriteByte((byte) 71);
             writer.WriteByte((byte) 104);
 
