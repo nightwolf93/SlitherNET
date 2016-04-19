@@ -44,11 +44,18 @@ namespace SlitherNET
     public class Settings
     {
         public NetworkSettings Network { get; set; }
+        public BasicSettings Basic { get; set; }
 
         public class NetworkSettings
         {
             public string Addr { get; set; }
             public int Port { get; set; }
+        }
+
+        public class BasicSettings
+        {
+            public string Motd { get; set; }
+            public string Caption { get; set; }
         }
     }
 }

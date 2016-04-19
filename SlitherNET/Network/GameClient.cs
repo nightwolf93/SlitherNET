@@ -59,7 +59,7 @@ namespace SlitherNET.Network
                     HeadPosition = new Vector2f(28907.3f * 5, 21136.8f * 5),
                 };
                 this.SendPacket(new SMSG_s_NewSnake(this.MySnake));
-                this.SendPacket(new SMSG_m_MessageOfTheDay("SlitherNET, a .net server engine for slither.io", "https://github.com/nightwolf93/SlitherNET"));
+                this.SendPacket(new SMSG_m_MessageOfTheDay(Program.Settings.Basic.Motd, Program.Settings.Basic.Caption));
                 
                 GameRoom.Instance.AddPlayer(this);
                 GameRoom.Instance.ShowFoods(this);
@@ -85,7 +85,7 @@ namespace SlitherNET.Network
                 var updatePacket = new CMSG_Update();
                 updatePacket.Deserialize(e.RawData);
 
-                Console.WriteLine("ActionType : " + updatePacket.ActionType);
+                //Console.WriteLine("ActionType : " + updatePacket.ActionType);
 
                 if(updatePacket.ActionType == 253) // Mouse down
                 {
@@ -103,7 +103,7 @@ namespace SlitherNET.Network
                 {
                     var degrees = (short)Math.Floor(updatePacket.ActionType * 1.44);
                     this.MySnake.CurrentAngle = degrees;
-                    Console.WriteLine("Mouse angle : " + degrees);
+                    //Console.WriteLine("Mouse angle : " + degrees);
                     this.SendPacket(new SMSG_e_UpdateSnakeDirection(this.MySnake, degrees));
                 }
             }
@@ -112,12 +112,10 @@ namespace SlitherNET.Network
 
         public void UpdateSnake()
         {
-            this.MySnake.Position.X += ((float)Math.Cos(this.MySnake.CurrentAngle) / 5) * 1000;
-            this.MySnake.Position.Y += ((float)Math.Sin(this.MySnake.CurrentAngle) / 5) * 1000;
-
-            //Console.WriteLine("X : " + (float)Math.Cos(this.MySnake.CurrentAngle) / 5);
-            //Console.WriteLine("Y : " + (float)Math.Sin(this.MySnake.CurrentAngle) / 5);
-
+            var incX = ((float)Math.Cos((Math.PI / 180) * this.MySnake.CurrentAngle) * 170);
+            var incY = ((float)Math.Sin((Math.PI / 180) * this.MySnake.CurrentAngle) * 170);
+            this.MySnake.Position.X += incX;
+            this.MySnake.Position.Y += incY;
             this.SendPacket(new SMSG_e_UpdateSnakeDirection(this.MySnake, this.MySnake.CurrentAngle));
             this.SendPacket(new SMSG_G_UpdateSnake(this.MySnake));
         }

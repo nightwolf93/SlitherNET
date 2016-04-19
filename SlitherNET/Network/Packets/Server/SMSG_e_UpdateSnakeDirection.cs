@@ -19,9 +19,9 @@ namespace SlitherNET.Network.Packets.Server
         }
 
         public Snake @Snake { get; set; }
-        public float Direction { get; set; }
+        public double Direction { get; set; }
 
-        public SMSG_e_UpdateSnakeDirection(Snake snake, float direction)
+        public SMSG_e_UpdateSnakeDirection(Snake snake, double direction)
         {
             this.Snake = snake;
             this.Direction = direction;

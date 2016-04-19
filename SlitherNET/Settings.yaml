@@ -6,3 +6,7 @@
 network:
   addr: 127.0.0.1
   port: 444
+  
+basic:
+  motd: 'SlitherNET, a .net server engine for slither.io'
+  caption: 'https://github.com/nightwolf93/SlitherNET'

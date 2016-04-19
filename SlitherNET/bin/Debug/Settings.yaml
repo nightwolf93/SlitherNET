@@ -1,3 +1,12 @@
-﻿network:
+# Configuration file for SlitherNET
+# By Nightwolf
+# https://github.com/nightwolf93/SlitherNET
+# File version : 1.0
+
+network:
   addr: 127.0.0.1
   port: 444
+  
+basic:
+  motd: 'SlitherNET, a .net server engine for slither.io'
+  caption: 'https://github.com/nightwolf93/SlitherNET'
